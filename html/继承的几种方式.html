@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea maxlength="100" id="yideng"></textarea>
+</body>
+
+<script>
+    // ## 传统形式（原型链继承）
+    // **缺点：**过多继承没用的属性
+    Grand.prototype.lastName = 'JC';
+
+    function Grand() {};
+    var grand = new Grand();
+    Father.prototype = grand;
+
+    function Father() {
+        this.name = 'hehe';
+    }
+    var father = new Father();
+    Son.prototype = father;
+
+    function Son() {};
+    var son = new Son();
+
+    //     ## 借用构造函数继承（类似继承）
+
+    //     **优点：**可以传参 
+
+    //     **缺点：**
+
+    //   - 不能继承借用构造函数的原型
+    //   - 每次构造函数都要多走一个函数
+    function Person(name, age, sex) {
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+    }
+
+    function Student(name, age, sex, grade) {
+        Person.call(this, name, age, sex);
+        this.grade = grade;
+    }
+    var student = new Student('dg', 40, 'male', 18);
+
+    // ## 组合式继承
+
+    // **（通俗来说就是用原型链实现对原型属性和方法的继承，用借用构造函数继承对实例属性的继承）**
+
+    // **优点：**避免了原型链和构造函数的缺陷，融合他们的优点，成为 JavaScript 中最常用的继承模式
+
+    // **缺点：**实例和原型链上存在两份相同的属性
+
+    Father.prototype.getfaName = function () {
+        console.log(this.faName);
+    }
+
+    function Father(name) {
+        this.faName = 'father';
+    }
+    Child.prototype = new Father();
+    Child.prototype.constructor = Child;
+
+    function Child(args) {
+        this.chName = 'child';
+        Father.apply(this, []);
+    }
+    var child = new Child();
+
+    // ## 共享原型
+
+    // **缺点：**不能随便改动自己的原型
+    Father.prototype.lastName = 'Deng';
+
+    function Father() {};
+
+    function Son() {};
+    Son.prototype = Father.prototype;
+    var son = new Son();
+    var father = new Father();
+
+    // ## 圣杯模式（寄生组合继承） 
+    // 第一种写法
+    function inherit(Target, Origin) {
+        function F() {};
+        F.prototype = Origin.prototype;
+        Target.prototype = new F();
+        Target.prototype.constructor = Target;
+        Target.prototype.uber = Origin.prototype;
+    } // 第一种写法
+    var inherit = (function () {
+        function F() {};
+        return function (Target, Origin) {
+            F.prototype = Origin.prototype;
+            Target.prototype = new F();
+            Target.prototype.constructor = Target;
+            Target.prototype.uber = Origin.prototype;
+        }
+    })();
+</script>
+
+</html>

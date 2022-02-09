@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #fu {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            /* background-color: red; */
+        }
+
+        #left {
+            float: left;
+            width: 200px;
+            height: 100%;
+            background-color: green;
+        }
+
+        #content {
+            float: left;
+            width: calc(100% - 400px);
+            height: 100%;
+            background-color: yellow;
+        }
+
+        #right {
+            float: right;
+            width: 200px;
+            height: 100%;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="fu">
+        <div id="left"></div>
+        <div id="content"></div>
+        <div id="right">right</div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+</body>
+<script>
+// * 一个特例
+// * 开始判断
+// 	* 法则一：对象方法中的this指向对象本身（箭头函数形式的除外）
+// 	* 法则二：多层嵌套函数中的this指向等同于包含该this的最近一个function的this
+// 	* 法则三：箭头函数以及非指向对象方法中的function的情况下this指向window
+// * 习题集
+// 	* 普通函数中的this
+// 	* 函数执行后返回另外一个函数中的this（普通函数中）
+// 	* 多层嵌套函数中的this（定时器&箭头函数）1
+// 	* 多层嵌套函数中的this（定时器&箭头函数）2
+// 立即执行函数this指向window
+
+
+// 法则一：对象方法中的this指向对象本身（箭头函数形式的除外）
+
+// var x1 = {
+//   name: 'bw2',
+//   getName1: function() {
+//     console.log(this)
+//   }
+// }
+// x1.getName1() 
+
+// 法则二：多层嵌套函数中的this指向等同于包含该this的最近一个function的this
+
+// var x2 = {
+//   name: 'bw2',
+//   getName2: function() {
+//     console.log(this)  // 等同于此处的this
+//     setTimeout(() => {
+//       console.log(this)  // 原始的this位置
+//     },0)
+//   }
+// }
+// x2.getName2()  
+
+// 法则三：箭头函数以及非指向对象方法中的function的情况下this指向window
+
+var x3 = {
+  name: 'bw2',
+  getName31: () => {
+    console.log(this)
+  },
+  getName32: function() {
+    return function() {
+      console.log(this)
+    }
+  }
+}
+x3.getName31()  // Window {stop: ƒ, open: ƒ, alert: ƒ, confirm: ƒ, prompt: ƒ, …}
+x3.getName32()()  // Window {stop: ƒ, open: ƒ, alert: ƒ, confirm: ƒ, prompt: ƒ, …}
+
+</script>
+
+</html>

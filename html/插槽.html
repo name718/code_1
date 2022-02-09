@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <h1>我是父组件的标题</h1>
+        <my-home>
+            <p>这是一些初始内容</p>
+            <p>这是更多的初始内容</p>
+            <p slot='header'>替换了</p>
+            <template slot="footer" slot-scope="user">
+                <span v-for="item in user.data">{{ item }}</span>
+            </template>
+        </my-home>
+    </div>
+
+    <script>
+        Vue.component('my-home', {
+            data: function () {
+                return {
+                    data: ['haha', 'hihi', 'hehe']
+                }
+            },
+            template: `<div><h2>我是子组件的标题</h2>
+                <slot name="header">头</slot>
+                <slot name="footer" :data:="data">尾巴</slot>
+                </div>`
+        })
+        new Vue({
+            el: "#app"
+        })
+    </script>
+
+</body>
+
+</html>

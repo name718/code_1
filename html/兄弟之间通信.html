@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>兄弟组件之间的传参</title>
+</head>
+
+<body>
+    <div id="app">
+        <tom-vue></tom-vue>
+        <jerry-vue></jerry-vue>
+        <button @click="handle">销毁事件</button>
+    </div>
+</body>
+<script>
+    var  hub = new Vue()
+    // 兄弟组件A
+    var tomVue = {
+        data(){
+            return {
+                num:1
+            }
+        },
+        template:'<button @click ="handle">tom点击了{{num}}次</button>',
+        created(){
+            // 监听组件的数据
+            hub.$on('tom-event',(val) => {
+                    this.num += val
+                })
+        },
+        methods:{
+            // 触发兄弟组件的事件和给兄弟组件的值
+            handle () {
+                hub.$emit('jerry-event', 3)
+            }
+        }
+    }
+    // 兄弟组件B
+    var jerryVue = {
+        data(){
+            return {
+                num:1
+            }
+        },
+        template:'<button @click ="handle">jerry点击了{{num}}次</button>',
+        created(){
+            // 监听组件的数据
+            hub.$on('jerry-event',(val) => {
+                    this.num += val
+                })
+        },
+        methods:{
+            // 触发兄弟组件的事件和给兄弟组件的值
+            handle () {
+                hub.$emit('tom-event', 2)
+            }
+        }
+    }
+    var vue = new Vue({
+        el: '#app',
+        data() {
+            return {
+            }
+        },
+        components:{
+            tomVue,
+            jerryVue
+        },
+        methods:{
+            handle(){
+                hub.$off('tom-event')
+                hub.$off('jerry-event')
+            }
+        }
+    })
+</script>
+
+</html>

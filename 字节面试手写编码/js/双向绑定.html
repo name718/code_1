@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 导入 vue 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 被 vm 实例所控制的区域 -->
+    <div id="app">
+
+    </div>
+    <input type="text" id="input">
+    <script>
+        const data = {};
+        const input = document.getElementById("input");
+        Object.defineProperty(data, "text", {
+            set(value) {
+                input.value = value;
+                this.value = value;
+            }
+        })
+        input.onchange = function (e) {
+            data.text = e.target.value;
+        }
+    </script>
+</body>
+
+</html>

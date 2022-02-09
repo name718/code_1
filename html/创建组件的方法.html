@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body> 
+    <div id="app">
+        <template id="tem1">
+            <div>我是child: '#tem1'创建的组件</div>
+        </template>
+        <child1></child1>
+        <child2></child2>
+    </div>
+    <script type="text/javascript">
+        Vue.component('child2',{
+            template: '<div>我是Vue.component创建的组件</div>'
+        });
+        var child1 = {
+            template:'<div>我是对象创建的组件</div>'
+        };
+        new Vue({
+            el: '#app',
+            components: {
+                child: '#tem1',
+                child1,
+            }
+        });
+        
+    </script>
+</body>
+</html>
