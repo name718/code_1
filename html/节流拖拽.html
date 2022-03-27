@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #app {
+            width: 100px;
+            height: 100px;
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        const box = document.getElementById('app');
+        //节流一段时间内，只执行一次某个操作，
+        // 过了这一段时间后，还有操作的话，继续执行新的操作
+        function throttle (fn){
+            let timer = null;
+            return function() {
+                if(timer) {
+                    return ;
+                }
+                timer = setTimeout(() => {
+                    fn();
+                    timer = null;
+                }, 2000)
+            };
+        }
+        box.addEventListener('click', throttle(function(e){
+            console.log("测试");
+        }));
+    </script>
+</body>
+</html>
